@@ -1,16 +1,3 @@
-"""
-Dataset loading utility.
-
-Default: scikit-learn's built-in "Digits" dataset (1,797 8x8 grayscale
-handwritten digit images, a well-known public subset of the UCI ML
-handwritten-digits dataset). It ships offline with scikit-learn, which
-makes it convenient for fast, reproducible experimentation.
-
-If you have internet access (e.g. running on your own machine or Colab),
-you can swap in full-size MNIST (28x28, 60,000 images) instead -- see the
-`load_mnist_torchvision()` function below and the README for instructions.
-"""
-
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -37,11 +24,7 @@ def get_dataloader(batch_size=64, shuffle=True):
 
 
 def load_mnist_torchvision(root="./data", batch_size=128):
-    """
-    Optional: real MNIST (28x28) via torchvision. Requires internet access
-    the first time it's run (downloads ~11MB). Use this instead of
-    get_dataloader() if you want to reproduce results on full MNIST.
-    """
+  
     import torchvision
     import torchvision.transforms as T
 
