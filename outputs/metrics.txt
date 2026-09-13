@@ -1,0 +1,4 @@
+Quantitative Results (lower FID = better, higher IS = better)
+============================================================
+VAE    | Digit-FID:   15.187 | Digit-IS: 4.168
+DDPM   | Digit-FID:    8.146 | Digit-IS: 5.737
