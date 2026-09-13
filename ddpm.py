@@ -1,24 +1,10 @@
-"""
-Denoising Diffusion Probabilistic Model (DDPM), implemented from scratch
-in PyTorch, following Ho et al. 2020 ("Denoising Diffusion Probabilistic Models").
-
-Components:
-    1. A fixed linear beta schedule defining the forward (noising) process.
-    2. A small U-Net-style noise-prediction network eps_theta(x_t, t).
-    3. Forward process q(x_t | x_0) applied in closed form (no loop needed).
-    4. Reverse process (sampling) that iteratively denoises pure noise
-       back into an image using the trained network.
-"""
-
 import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-# ----------------------------------------------------------------------
-# 1. Noise schedule
-# ----------------------------------------------------------------------
+
 class DiffusionSchedule:
     def __init__(self, timesteps=200, beta_start=1e-4, beta_end=0.02, device="cpu"):
         self.timesteps = timesteps
@@ -39,9 +25,7 @@ class DiffusionSchedule:
         return sqrt_ac * x0 + sqrt_1m_ac * noise
 
 
-# ----------------------------------------------------------------------
-# 2. Sinusoidal timestep embedding
-# ----------------------------------------------------------------------
+
 class TimeEmbedding(nn.Module):
     def __init__(self, dim):
         super().__init__()
@@ -56,9 +40,6 @@ class TimeEmbedding(nn.Module):
         return self.mlp(emb)
 
 
-# ----------------------------------------------------------------------
-# 3. Small U-Net for noise prediction
-# ----------------------------------------------------------------------
 class ConvBlock(nn.Module):
     def __init__(self, in_ch, out_ch, time_dim):
         super().__init__()
@@ -108,9 +89,7 @@ class SimpleUNet(nn.Module):
         return self.out_conv(u)
 
 
-# ----------------------------------------------------------------------
-# 4. Sampling (reverse process)
-# ----------------------------------------------------------------------
+
 @torch.no_grad()
 def sample_ddpm(model, schedule: DiffusionSchedule, n_samples, img_size, device):
     model.eval()
