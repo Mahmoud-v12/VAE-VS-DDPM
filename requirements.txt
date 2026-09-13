@@ -1,0 +1,5 @@
+torch>=2.0
+scikit-learn>=1.0
+matplotlib>=3.5
+scipy>=1.8
+torchvision>=0.15  # optional, only needed for load_mnist_torchvision()
