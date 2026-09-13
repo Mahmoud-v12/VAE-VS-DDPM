@@ -1,6 +1,5 @@
 # VAE vs. DDPM — From-Scratch Implementation & Comparative Study
 
-**Task code:** GenCV003 · **Position:** CV Engineer
 
 ---
 
