@@ -1,4 +1,4 @@
-# VAE vs. DDPM — From-Scratch Generative Models (GenCV003)
+# VAE vs. DDPM — From-Scratch Generative Models 
 
 Implementation and comparison of a Variational Autoencoder (VAE) and a
 Denoising Diffusion Probabilistic Model (DDPM), both built from scratch in
