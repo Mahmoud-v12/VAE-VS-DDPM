@@ -1,24 +1,3 @@
-"""
-Quantitative evaluation of the VAE and DDPM generators.
-
-IMPORTANT NOTE ON METRICS:
-Standard FID / Inception Score require a pretrained Inception-V3 network
-(trained on ImageNet). This sandbox has no internet access to download
-those pretrained weights, so instead we train a small CNN classifier
-directly on the real Digits dataset and use it as a domain-specific
-feature extractor. This is a well-established substitute when the
-target domain differs strongly from ImageNet (see e.g. domain-specific
-FID variants used for medical/specialized imaging in the literature).
-We compute:
-    - "Digit-FID": Frechet distance between real/generated feature
-      distributions, using our classifier's penultimate-layer features.
-    - "Digit-IS": An Inception-Score analog using the classifier's
-      softmax outputs on generated images.
-
-If you have internet access, swap in `pytorch-fid` / `torchmetrics`'
-FID and Inception Score implementations for standard, literature-
-comparable numbers -- see README for instructions.
-"""
 
 import numpy as np
 import torch
@@ -36,9 +15,6 @@ LATENT_DIM = 16
 TIMESTEPS = 200
 
 
-# ----------------------------------------------------------------------
-# Small classifier used as feature extractor (trained on real data only)
-# ----------------------------------------------------------------------
 class TinyClassifier(nn.Module):
     def __init__(self, n_classes=10, feat_dim=32):
         super().__init__()
@@ -89,8 +65,7 @@ def frechet_distance(feats_real, feats_fake, eps=1e-6):
     mu1, sigma1 = feats_real.mean(axis=0), np.cov(feats_real, rowvar=False)
     mu2, sigma2 = feats_fake.mean(axis=0), np.cov(feats_fake, rowvar=False)
 
-    # Small diagonal regularization avoids singular-matrix issues on
-    # small feature dimensions / sample sizes.
+  
     sigma1 = sigma1 + np.eye(sigma1.shape[0]) * eps
     sigma2 = sigma2 + np.eye(sigma2.shape[0]) * eps
 
@@ -114,7 +89,6 @@ def main():
     print("Training domain-specific feature-extractor classifier on real digits...")
     clf = train_classifier(epochs=20)
 
-    # Real data features
     real_dataset = DigitsDataset()
     real_images = real_dataset.images.to(DEVICE)
     feats_real, _ = get_features_and_probs(clf, real_images)
