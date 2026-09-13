@@ -1,15 +1,3 @@
-"""
-Variational Autoencoder (VAE) implemented from scratch in PyTorch.
-
-Architecture:
-    Encoder: Conv layers -> flatten -> two linear heads (mu, logvar)
-    Reparameterization trick: z = mu + eps * std
-    Decoder: Linear -> ConvTranspose layers -> sigmoid output
-
-Loss:
-    ELBO = Reconstruction loss (BCE) + KL divergence to N(0, I)
-"""
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
