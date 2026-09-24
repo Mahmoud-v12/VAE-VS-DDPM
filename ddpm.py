@@ -57,7 +57,6 @@ class ConvBlock(nn.Module):
 
 
 class SimpleUNet(nn.Module):
-    """A compact U-Net sized for small (8x8 or 28x28) grayscale images."""
 
     def __init__(self, in_channels=1, base_ch=32, time_dim=64):
         super().__init__()
