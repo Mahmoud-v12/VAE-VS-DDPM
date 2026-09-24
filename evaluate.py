@@ -95,7 +95,7 @@ def main():
 
     results = {}
 
-    # ---------------- VAE ----------------
+    #  VAE 
     vae = VAE(in_channels=1, latent_dim=LATENT_DIM, base_ch=32).to(DEVICE)
     vae.load_state_dict(torch.load("outputs/vae.pt", map_location=DEVICE))
     vae.eval()
@@ -106,7 +106,7 @@ def main():
         "Digit-IS": inception_score_like(probs_vae),
     }
 
-    # ---------------- DDPM ----------------
+    #  DDPM 
     ddpm = SimpleUNet(in_channels=1, base_ch=32, time_dim=64).to(DEVICE)
     ddpm.load_state_dict(torch.load("outputs/ddpm.pt", map_location=DEVICE))
     schedule = DiffusionSchedule(timesteps=TIMESTEPS, device=DEVICE)
